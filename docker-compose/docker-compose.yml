@@ -73,7 +73,7 @@ services:
     <<: *template
     container_name: work
     ports:
-      - 2222:22"
+      - "2222:22"
     networks:
       infraci_nw:
         ipv4_address: 192.168.33.99
