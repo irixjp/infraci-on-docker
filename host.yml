@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - files:
+        path: "{{ ansible_user_dir }}/{{ item }}"
+        state: directory
+        mode: 0700
+      loop:
+        - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
+        - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
+
+    - copy:
+        src: id_rda
+        dest: "{{ item }}/private_key"
+        mode: 0600
+      loop:
+        - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
+        - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
