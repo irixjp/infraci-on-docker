@@ -17,6 +17,7 @@
 
     - user:
         name: vagrant
+        groups: vagrant,wheel
 
     - file:
         path: /home/vagrant/.ssh
@@ -32,8 +33,8 @@
         owner: vagrant
         group: vagrant
 
-- hosts: work
-  gather_facts: false
+- hosts: works
+  gather_facts: true
   tasks:
     - yum:
         name: "{{ item }}"
@@ -52,18 +53,28 @@
         state: started
         enabled: true
 
-    - files:
-        path: "{{ ansible_user_dir }}/{{ item }}"
+    - file:
+        path: "/home/vagrant/{{ item }}"
         state: directory
         mode: 0700
+        owner: vagrant
+        group: vagrant
       loop:
         - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
         - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
 
     - copy:
-        src: id_rda
-        dest: "{{ item }}/private_key"
+        src: private_key
+        dest: "/home/vagrant/{{ item }}/private_key"
         mode: 0600
+        owner: vagrant
+        group: vagrant
       loop:
         - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
         - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
+
+    - lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^vagrant\s'
+        line: 'vagrant ALL=(ALL) NOPASSWD: ALL'
