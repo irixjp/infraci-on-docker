@@ -23,7 +23,6 @@ services:
     ports:
       - "8080:80"
       - "443:443"
-      - "2222:22"
     volumes:
       - ./volume/data:/var/opt/gitlab
     networks:
@@ -70,6 +69,14 @@ services:
     networks:
       infraci_nw:
         ipv4_address: 192.168.33.15
+  work:
+    <<: *template
+    container_name: work
+    ports:
+      - 2222:22"
+    networks:
+      infraci_nw:
+        ipv4_address: 192.168.33.99
 
 networks:
   infraci_nw:

@@ -1,8 +1,12 @@
+Start CI Environments
 ```
+mkdir -p ~/prepare && cd ~/prepare
+git clone https://github.com/irixjp/infraci-on-docker.git
+cd infraci-on-docker/docker-compose
 docker-compose up -d
 ```
 
-Register runner containers
+Register runner containers after GitLab started
 ```
 RUNNER_TOKEN=token-ABC
 EXT_URL=http://192.168.33.10/

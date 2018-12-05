@@ -1,0 +1,69 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - openssh-server
+        - openssh-clients
+        - sudo
+
+    - systemd:
+        name: sshd
+        state: started
+        enabled: true
+
+    - user:
+        name: vagrant
+
+    - file:
+        path: /home/vagrant/.ssh
+        state: directory
+        mode: 0700
+        owner: vagrant
+        group: vagrant
+
+    - copy:
+        src: authorized_keys
+        dest: /home/vagrant/.ssh/authorized_keys
+        mode: 0644
+        owner: vagrant
+        group: vagrant
+
+- hosts: work
+  gather_facts: false
+  tasks:
+    - yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - vim
+        - which
+        - tree
+        - git
+        - epel-release
+        - ansible
+        - ansible-lint
+
+    - systemd:
+        name: sshd
+        state: started
+        enabled: true
+
+    - files:
+        path: "{{ ansible_user_dir }}/{{ item }}"
+        state: directory
+        mode: 0700
+      loop:
+        - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
+        - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
+
+    - copy:
+        src: id_rda
+        dest: "{{ item }}/private_key"
+        mode: 0600
+      loop:
+        - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
+        - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
