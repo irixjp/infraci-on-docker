@@ -1,14 +1,14 @@
 version: "3.6"
 
 x-template: &template
-  image: centos:latest
+  image: centos:7.3.1611
   privileged: true
   command: /sbin/init
   restart: always
 
 services:
   gitlab:
-    image: gitlab/gitlab-ce:11.4.8-ce.0
+    image: gitlab/gitlab-ce:10.8.4-ce.0
     container_name: gitlab
     restart: always
     environment:
@@ -29,7 +29,7 @@ services:
       infraci_nw:
         ipv4_address: 192.168.33.10
   gitlab-runner:
-    image: gitlab/gitlab-runner:v11.5.0
+    image: gitlab/gitlab-runner:v10.8.0
     container_name: gitlab-runner
     restart: always
     volumes:
@@ -69,9 +69,9 @@ services:
     networks:
       infraci_nw:
         ipv4_address: 192.168.33.15
-  work:
+  console:
     <<: *template
-    container_name: work
+    container_name: console
     ports:
       - "2222:22"
     networks:

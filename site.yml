@@ -37,16 +37,16 @@
   gather_facts: true
   tasks:
     - yum:
-        name: "{{ item }}"
-        state: latest
+        name: "{{ item[0] }}"
+        state: "{{ item[1] | default('latest') }}"
       loop:
         - vim
         - which
         - tree
         - git
         - epel-release
-        - ansible
-        - ansible-lint
+        - [ "ansible", "2.4.3.0" ]
+        - [ "ansible-lint" , "3.4.21" ]
 
     - systemd:
         name: sshd
