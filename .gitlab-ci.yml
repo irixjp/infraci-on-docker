@@ -13,3 +13,5 @@ Setup_Clients_Env:
     - ANSIBLE_CONFIG=./ansible.cfg ansible --version
     - ANSIBLE_CONFIG=./ansible.cfg ansible all -i hosts -c docker -m ping
     - ANSIBLE_CONFIG=./ansible.cfg ansible-playbook -i hosts -c docker site.yml
+  tags:
+    - docker

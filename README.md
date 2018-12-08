@@ -33,12 +33,15 @@ EXT_URL=http://192.168.33.10/
 
 docker exec gitlab-runner \
        gitlab-runner register \
-       -n \
-       -r ${RUNNER_TOKEN} \
-       --executor docker \
-       --docker-image centos:latest \
+       --non-interactive \
        --url ${EXT_URL} \
+       --registration-token ${RUNNER_TOKEN} \
+       --tag-list docker \
+       --executor docker \
+       --locked=false \
+       --docker-image docker:latest \
        --clone-url http://192.168.33.10/ \
        --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
+       --docker-privileged true \
        --docker-network-mode docker-compose_infraci_nw
 ```
