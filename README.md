@@ -42,6 +42,6 @@ docker exec gitlab-runner \
        --docker-image docker:latest \
        --clone-url http://192.168.33.10/ \
        --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
-       --docker-privileged true \
+       --docker-privileged=true \
        --docker-network-mode docker-compose_infraci_nw
 ```

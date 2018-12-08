@@ -15,6 +15,10 @@
         state: started
         enabled: true
 
+    - group:
+        name: vagrant
+        state: present
+
     - user:
         name: vagrant
         groups: vagrant,wheel
@@ -33,20 +37,25 @@
         owner: vagrant
         group: vagrant
 
-- hosts: works
+- hosts: consoles
   gather_facts: true
   tasks:
     - yum:
-        name: "{{ item[0] }}"
-        state: "{{ item[1] | default('latest') }}"
+        name: "{{ item }}"
+        state: latest
       loop:
         - vim
         - which
         - tree
         - git
         - epel-release
-        - [ "ansible", "2.4.3.0" ]
-        - [ "ansible-lint" , "3.4.21" ]
+
+    - yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - ansible-2.4.2.0-2.el7
+        - ansible-lint-3.4.21-1.el7
 
     - systemd:
         name: sshd
@@ -74,7 +83,7 @@
         - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
 
     - copy:
-        src: .vimrc
+        src: vimrc
         dest: "/home/vagrant/.vimrc"
         mode: 0755
         owner: vagrant
