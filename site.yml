@@ -73,6 +73,13 @@
         - vagrant/infraci/.vagrant/machines/gitlab/virtualbox
         - vagrant/infraci/.vagrant/machines/gitlab-runner/virtualbox
 
+    - copy:
+        src: .vimrc
+        dest: "/home/vagrant/.vimrc"
+        mode: 0755
+        owner: vagrant
+        group: vagrant
+
     - lineinfile:
         path: /etc/sudoers
         state: present
