@@ -22,7 +22,7 @@ Start CI Environments
 ```
 mkdir -p ~/prepare && cd ~/prepare
 git clone https://github.com/irixjp/infraci-on-docker.git
-cd infraci-on-docker/docker-compose
+cd infraci-on-docker/docker/env_build/docker-compose:
 docker-compose up -d
 ```
 
