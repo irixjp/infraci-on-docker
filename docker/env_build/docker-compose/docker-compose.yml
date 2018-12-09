@@ -10,7 +10,7 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:10.8.4-ce.0
     container_name: gitlab
-    hostnmae: gitlab
+    hostname: gitlab
     restart: always
     environment:
       GITLAB_OMNIBUS_CONFIG: |
@@ -32,7 +32,7 @@ services:
   gitlab-runner:
     image: gitlab/gitlab-runner:v10.8.0
     container_name: gitlab-runner
-    hostnmae: gitlab-runner
+    hostname: gitlab-runner
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -42,7 +42,7 @@ services:
   client1:
     <<: *template
     container_name: client1
-    hostnmae: client1
+    hostname: client1
     ports:
       - "8082:80"
     networks:
@@ -51,7 +51,7 @@ services:
   client2:
     <<: *template
     container_name: client2
-    hostnmae: client2
+    hostname: client2
     ports:
       - "8083:80"
     networks:
@@ -60,7 +60,7 @@ services:
   client3:
     <<: *template
     container_name: client3
-    hostnmae: client3
+    hostname: client3
     ports:
       - "8084:80"
     networks:
@@ -69,7 +69,7 @@ services:
   client4:
     <<: *template
     container_name: client4
-    hostnmae: client4
+    hostname: client4
     ports:
       - "8085:80"
     networks:
@@ -78,7 +78,7 @@ services:
   console:
     <<: *template
     container_name: console
-    hostnmae: console
+    hostname: console
     ports:
       - "2222:22"
     networks:
