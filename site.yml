@@ -89,6 +89,20 @@
         owner: vagrant
         group: vagrant
 
+    - file:
+        path: /home/vagrant/.ssh
+        state: directory
+        mode: 0700
+        owner: vagrant
+        group: vagrant
+
+    - copy:
+        src: private_key
+        dest: /home/vagrant/.ssh/infraci
+        mode: 0600
+        owner: vagrant
+        group: vagrant
+
     - lineinfile:
         path: /etc/sudoers
         state: present
