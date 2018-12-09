@@ -10,6 +10,7 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:10.8.4-ce.0
     container_name: gitlab
+    hostnmae: gitlab
     restart: always
     environment:
       GITLAB_OMNIBUS_CONFIG: |
@@ -19,6 +20,7 @@ services:
         gitlab_rails['initial_root_password'] = 'password'
         gitlab_rails['initial_shared_runners_registration_token'] = 'token-ABC'
         gitlab_rails['gitlab_shell_ssh_port'] = 22
+        gitlab_rails['registry_enabled'] = true
         unicorn['worker_timeout'] = 60
         unicorn['worker_processes'] = 3
     ports:
@@ -30,6 +32,7 @@ services:
   gitlab-runner:
     image: gitlab/gitlab-runner:v10.8.0
     container_name: gitlab-runner
+    hostnmae: gitlab-runner
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -39,6 +42,7 @@ services:
   client1:
     <<: *template
     container_name: client1
+    hostnmae: client1
     ports:
       - "8082:80"
     networks:
@@ -47,6 +51,7 @@ services:
   client2:
     <<: *template
     container_name: client2
+    hostnmae: client2
     ports:
       - "8083:80"
     networks:
@@ -55,6 +60,7 @@ services:
   client3:
     <<: *template
     container_name: client3
+    hostnmae: client3
     ports:
       - "8084:80"
     networks:
@@ -63,6 +69,7 @@ services:
   client4:
     <<: *template
     container_name: client4
+    hostnmae: client4
     ports:
       - "8085:80"
     networks:
@@ -71,6 +78,7 @@ services:
   console:
     <<: *template
     container_name: console
+    hostnmae: console
     ports:
       - "2222:22"
     networks:
